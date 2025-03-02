@@ -11,6 +11,7 @@ use Filament\Forms;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
@@ -121,7 +122,19 @@ class PegawaiResource extends Resource
 
                             curl_close($ch);
 
-                            dd($server_output);
+                            if ($server_output === "\"success\"") {
+                                return Notification::make()
+                                    ->title('Berhasil')
+                                    ->body('Pesan WhatsApp Berhasil Dikirim! ke '. $value['nama_pegawai'])
+                                    ->success()
+                                    ->sendToDatabase(auth()->user());
+                            } else {
+                                return Notification::make()
+                                    ->title('Gagal!')
+                                    ->body(json_encode($server_output))
+                                    ->danger()
+                                    ->sendToDatabase(auth()->user());
+                            }
                         }
                     })
             ])

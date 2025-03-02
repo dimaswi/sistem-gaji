@@ -31,6 +31,7 @@ class GajiPanelProvider extends PanelProvider
             ->topNavigation()
             ->breadcrumbs(false)
             ->login(Login::class)
+            ->databaseNotifications()
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -57,6 +58,8 @@ class GajiPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->databaseNotificationsPolling('15s');
     }
+
 }
