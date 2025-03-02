@@ -1,0 +1,66 @@
+version: '3.8'
+networks:
+    webapp:
+services:
+    nginx_office:
+        image: nginx:alpine
+        container_name: nginx
+        ports:
+            - "8098:8098"
+        volumes:
+            - ./:/var/www/html
+            - ./docker/nginx/site.conf:/etc/nginx/conf.d/default.conf:rw
+        depends_on:
+            - gaji
+            - db_gaji
+        networks:
+            - webapp
+
+    db_gaji:
+        image: mysql
+        restart: always
+        environment:
+            MYSQL_DATABASE: 'db'
+            MYSQL_USER: 'dimas'
+            MYSQL_PASSWORD: 'dimas1950'
+            MYSQL_ROOT_PASSWORD: 'dimas1950'
+        ports:
+            - '3306:3306'
+        volumes:
+            - my-db:/var/lib/mysql
+        networks:
+            - webapp
+
+    gaji:
+        container_name: gaji
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ./:/var/www/html
+        ports:
+            - "9000:9000"
+        working_dir: /var/www/html
+        networks:
+            - webapp
+
+    #phpMyAdmin Service
+    # phpmyadmin:
+    #   image: phpmyadmin/phpmyadmin
+    #   container_name: phpmyadmin
+    #   ports:
+    #     - "3400:80"
+    #   depends_on:
+    #     - db
+
+
+    # pgadmin:
+    #     image: dpage/pgadmin4
+    #     container_name: pgAdmin
+    #     ports:
+    #         - "5050:80"
+    #     depends_on:
+    #         - db
+    #     environment:
+    #         PGADMIN_DEFAULT_EMAIL: hanieasemi76@gmail.com
+    #         PGADMIN_DEFAULT_PASSWORD: password

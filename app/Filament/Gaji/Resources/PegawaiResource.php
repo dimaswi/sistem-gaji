@@ -20,7 +20,9 @@ use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Http;
 
 class PegawaiResource extends Resource
 {
@@ -46,6 +48,7 @@ class PegawaiResource extends Resource
                         ->placeholder('Masukan Nomor Whatsapp Pegawai')
                         ->numeric()
                         ->required()
+                        ->default(62)
                 ])
             ]);
     }
@@ -54,7 +57,7 @@ class PegawaiResource extends Resource
     {
         return $table
             ->recordUrl(
-                fn (Pegawai $record) => PegawaiResource::getUrl('thp', ['record' => $record->id])
+                fn(Pegawai $record) => PegawaiResource::getUrl('thp', ['record' => $record->id])
             )
             ->columns([
                 TextColumn::make('index')
@@ -84,12 +87,48 @@ class PegawaiResource extends Resource
                 BulkAction::make('kirim')
                     ->label('Kirim Pesan WhatsApp')
                     ->icon('heroicon-o-envelope')
-                    ->color('success'),
+                    ->color('success')
+                    ->action(function (Collection $records) {
+                        // dd($records);
+                        foreach ($records as $key => $value) {
+                            // dd($value['nomor_whatsapp']);
+                            $url_api = 'http://147.93.104.139:5000/send-text-message?cred_id=085232738966';
+                            $data = [
+                                'phone_number' => $value['nomor_whatsapp'],
+                                'message' => 'TEST KIRIM 2',
+                            ];
+
+                            $headers = array(
+                                'Content-Type: application/json',
+                                );
+
+                            $ch = curl_init();
+
+                            curl_setopt($ch, CURLOPT_URL, $url_api);
+                            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_POST, true);
+                            curl_setopt(
+                                $ch,
+                                CURLOPT_POSTFIELDS,
+                                json_encode($data)
+                            );
+
+                            // Receive server response ...
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+                            $server_output = curl_exec($ch);
+
+                            curl_close($ch);
+
+                            dd($server_output);
+                        }
+                    })
             ])
             ->headerActions([
                 ExportAction::make()
                     ->exporter(PegawaiExporter::class)
-                    // ->exporter(PegawaiExporter::class)
+                // ->exporter(PegawaiExporter::class)
             ]);;
     }
 

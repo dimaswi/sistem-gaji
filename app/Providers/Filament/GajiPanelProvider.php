@@ -27,6 +27,7 @@ class GajiPanelProvider extends PanelProvider
             ->default()
             ->id('gaji')
             ->path('gaji')
+            ->spa()
             ->topNavigation()
             ->breadcrumbs(false)
             ->login(Login::class)
