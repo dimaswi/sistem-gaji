@@ -26,8 +26,6 @@ services:
             MYSQL_ROOT_PASSWORD: 'dimas1950'
         ports:
             - '3306:3306'
-        volumes:
-            - my-db:/var/lib/mysql
         networks:
             - webapp
 
