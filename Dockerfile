@@ -58,9 +58,9 @@ RUN apt-get update; \
 # Copy project ke dalam container
 COPY . /var/www/html
 
-# Copy directory project permission ke container
-COPY --chown=www-data:www-data . /var/www/html
-RUN chown -R www-data:www-data /var/www/html
+# # Copy directory project permission ke container
+# COPY --chown=www-data:www-data . /var/www/html
+# RUN chown -R www-data:www-data /var/www/html
 
 # Set working directory
 WORKDIR /var/www/html
