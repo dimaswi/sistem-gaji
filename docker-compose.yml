@@ -2,7 +2,7 @@ version: '3.8'
 networks:
     webapp:
 services:
-    nginx_office:
+    nginx_gaji:
         image: nginx:alpine
         container_name: nginx
         ports:
