@@ -37,7 +37,7 @@ services:
         volumes:
             - ./:/var/www/html
         ports:
-            - "9098:9098"
+            - "9000:9000"
         working_dir: /var/www/html
         networks:
             - webapp
