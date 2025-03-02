@@ -95,7 +95,7 @@ class PegawaiResource extends Resource
                             $url_api = 'http://147.93.104.139:5000/send-text-message?cred_id=085232738966';
                             $data = [
                                 'phone_number' => $value['nomor_whatsapp'],
-                                'message' => 'TEST KIRIM 2',
+                                'message' => 'Slip gaji dapat dilihat pada '. url('/'.$value->id) . ' jika terdapat kendala saat membuka slip gaji, silahkan menghubungi bagian keuangan! Terimakasih',
                             ];
 
                             $headers = array(
