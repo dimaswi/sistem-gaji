@@ -62,12 +62,13 @@ COPY . /var/www/html
 # COPY --chown=www-data:www-data . /var/www/html
 # RUN chown -R www-data:www-data /var/www/html
 
-# Set working directory
-WORKDIR /var/www/html
 
 # Install composer
+WORKDIR /var/www/html
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install
+RUN php artisan key:generate
+RUN php artisan optimize
 RUN chmod -R 775 storage
 RUN chmod -R ugo+rw storage
 
