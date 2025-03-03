@@ -93,12 +93,10 @@ class PegawaiResource extends Resource
                         // dd($records);
                         foreach ($records as $key => $value) {
                             // dd($value['nomor_whatsapp']);
-                            $url_api = 'http://147.93.104.139:5000/send-text-message?cred_id=085232738966';
+                            $url_api = 'http://147.93.104.139:5000/send-text-message?cred_id=081230472532';
                             $data = [
                                 "phone_number" => $value['nomor_whatsapp'],
-                                "media_filename" => "gaji.pdf",
-                                "media" => url('/' . $value->id),
-                                "message" => "Berikut slip gaji untuk bulan ini --Sistem Broadcast Klinik Muhammadiyah Kedungadem :)",
+                                "message" => "Slip bulan ini dapat dilihat pada link berikut : http://klinikmuhammadiyahkedungadem.online/". $value['id'],
                             ];
 
                             $headers = array(
