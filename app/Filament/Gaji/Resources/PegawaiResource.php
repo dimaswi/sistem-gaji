@@ -95,13 +95,15 @@ class PegawaiResource extends Resource
                             // dd($value['nomor_whatsapp']);
                             $url_api = 'http://147.93.104.139:5000/send-text-message?cred_id=085232738966';
                             $data = [
-                                'phone_number' => $value['nomor_whatsapp'],
-                                'message' => 'Slip gaji dapat dilihat pada '. url('/'.$value->id) . ' jika terdapat kendala saat membuka slip gaji, silahkan menghubungi bagian keuangan! Terimakasih',
+                                "phone_number" => $value['nomor_whatsapp'],
+                                "media_filename" => "gaji.pdf",
+                                "media" => url('/' . $value->id),
+                                "message" => "Berikut slip gaji untuk bulan ini --Sistem Broadcast Klinik Muhammadiyah Kedungadem :)",
                             ];
 
                             $headers = array(
                                 'Content-Type: application/json',
-                                );
+                            );
 
                             $ch = curl_init();
 
@@ -125,7 +127,7 @@ class PegawaiResource extends Resource
                             if ($server_output === "\"success\"") {
                                 return Notification::make()
                                     ->title('Berhasil')
-                                    ->body('Pesan WhatsApp Berhasil Dikirim! ke '. $value['nama_pegawai'])
+                                    ->body('Pesan WhatsApp Berhasil Dikirim! ke ' . $value['nama_pegawai'])
                                     ->success()
                                     ->sendToDatabase(auth()->user());
                             } else {
