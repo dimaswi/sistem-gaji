@@ -60,7 +60,7 @@ class ListPegawais extends ListRecords
 
                             Notification::make()
                                 ->title('Berhasil!')
-                                ->body('Data Gaji Bulan '. $data['month'] .' Berhasil Dihapus!')
+                                ->body('Data Gaji Bulan ' . $data['month'] . ' Berhasil Dihapus!')
                                 ->success()
                                 ->send();
                         } catch (\Throwable $th) {
@@ -108,13 +108,12 @@ class ListPegawais extends ListRecords
                                     'kasbon' => $value['kasbon'],
                                     'total' => $value['total_potongan'],
                                 ]);
-
-                                return Notification::make()
-                                    ->title('Berhasil')
-                                    ->body('Data Penghasilan Berhasil Diimport!')
-                                    ->success()
-                                    ->send();
                             }
+                            return Notification::make()
+                                ->title('Berhasil')
+                                ->body('Data Penghasilan Berhasil Diimport!')
+                                ->success()
+                                ->send();
                         } else {
                             return Notification::make()
                                 ->title('Gagal!')
