@@ -32,26 +32,27 @@ Route::get('/{id}', function () {
     $penerimaan = Penghasilan::where('nomor_induk_pegawai', $record->nip)->whereMonth('created_at', $periode)->get();
     $potongan = Potongan::where('nomor_induk_pegawai', $record->nip)->whereMonth('created_at', $periode)->get();
 
-    ob_clean();
+    // ob_clean();
 
-    return Pdf::setOptions([
-        'isHtml5ParserEnabled' => true,
-        'isRemoteEnabled' => true,
-    ])->setHttpContext([
-        'ssl' => [
-            'verify_peer' => FALSE,
-            'verify_peer_name' => FALSE,
-            'allow_self_signed' => TRUE,
-        ]
-    ])
-    ->loadView('pdf.thp',
-    [
-        'periode' => $periode,
-        'periode_gaji' => $periode_gaji,
-        'tanggal_gaji' => $tanggal_gaji,
-        'penerimaan' => $penerimaan,
-        'potongan' =>$potongan ,
-        'record' => $record
-    ]
-    )->stream($record->id. '.pdf');
+    // $dompdf = Pdf::setOptions([
+    //     'isHtml5ParserEnabled' => true,
+    //     'isRemoteEnabled' => true,
+    // ])->setHttpContext([
+    //     'ssl' => [
+    //         'verify_peer' => FALSE,
+    //         'verify_peer_name' => FALSE,
+    //         'allow_self_signed' => TRUE,
+    //     ]
+    // ])
+    // ->loadView('pdf.thp',
+    // [
+    //     'periode' => $periode,
+    //     'periode_gaji' => $periode_gaji,
+    //     'tanggal_gaji' => $tanggal_gaji,
+    //     'penerimaan' => $penerimaan,
+    //     'potongan' =>$potongan ,
+    //     'record' => $record
+    // ]
+    // )->setPaper('a4', 'portrait')->download($record->id.'.pdf');
+    return view('pdf.thp', compact('periode','periode_gaji','tanggal_gaji','potongan','record', 'penerimaan'));
 });
