@@ -32,6 +32,8 @@ Route::get('/{id}', function () {
     $penerimaan = Penghasilan::where('nomor_induk_pegawai', $record->nip)->whereMonth('created_at', $periode)->get();
     $potongan = Potongan::where('nomor_induk_pegawai', $record->nip)->whereMonth('created_at', $periode)->get();
 
+    ob_clean();
+
     return Pdf::setOptions([
         'isHtml5ParserEnabled' => true,
         'isRemoteEnabled' => true,
