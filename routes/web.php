@@ -51,5 +51,5 @@ Route::get('/{id}', function () {
         'potongan' =>$potongan ,
         'record' => $record
     ]
-    )->download($record->id. '.pdf');
+    )->stream($record->id. '.pdf');
 });
