@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::redirect('/', 'login');
+Route::redirect('/', '/gaji/login');
 
 Route::get('/{id}', function () {
     $record = Pegawai::where('id', request()->id)->first();
