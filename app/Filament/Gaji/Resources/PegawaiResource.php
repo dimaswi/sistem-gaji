@@ -57,6 +57,9 @@ class PegawaiResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(function (Builder $query) {
+                return $query->where('nip', auth()->user()->nip);
+            })
             ->recordUrl(
                 fn(Pegawai $record) => PegawaiResource::getUrl('thp', ['record' => $record->id])
             )
@@ -96,7 +99,7 @@ class PegawaiResource extends Resource
                             $url_api = 'http://147.93.104.139:5000/send-text-message?cred_id=081230472532';
                             $data = [
                                 "phone_number" => $value['nomor_whatsapp'],
-                                "message" => "Slip bulan ini dapat dilihat pada link berikut : http://klinikmuhammadiyahkedungadem.online/". $value['id'],
+                                "message" => "Slip bulan ini dapat dilihat pada link berikut : http://klinikmuhammadiyahkedungadem.online/" . $value['id'],
                             ];
 
                             $headers = array(

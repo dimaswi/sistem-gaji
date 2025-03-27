@@ -18,9 +18,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::redirect('/', 'login');
 
 Route::get('/{id}', function () {
     $record = Pegawai::where('id', request()->id)->first();
