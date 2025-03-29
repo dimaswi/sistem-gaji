@@ -58,7 +58,11 @@ class PegawaiResource extends Resource
     {
         return $table
             ->modifyQueryUsing(function (Builder $query) {
-                return $query->where('nip', auth()->user()->nip);
+                if (auth()->user()->nip === '2014.10.09.062' OR auth()->user()->nip === '2023.01.12.162') {
+                    return $query;
+                } else {
+                    return $query->where('nip', auth()->user()->nip);
+                }
             })
             ->recordUrl(
                 fn(Pegawai $record) => PegawaiResource::getUrl('thp', ['record' => $record->id])
