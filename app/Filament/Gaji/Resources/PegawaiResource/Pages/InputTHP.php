@@ -46,8 +46,9 @@ class InputTHP extends Page
         $this->potongan = Potongan::where('nomor_induk_pegawai', $this->record->nip)->whereMonth('created_at', $this->periode)->get();
         $tanggal = $this->periode . '/03/' . Carbon::now('Asia/Jakarta')->format('Y');
         setlocale(LC_ALL, 'IND');
-        $this->periode_gaji = Carbon::parse($tanggal)->subMonth()->formatLocalized('%B %Y');
-        $this->tanggal_gaji = Carbon::parse($tanggal)->subMonth()->formatLocalized('%A %d %B %Y');
+        $this->periode_gaji = Carbon::parse($tanggal)->formatLocalized('%B %Y');
+        $this->tanggal_gaji = Carbon::parse($tanggal)->addMonth()->formatLocalized('%A %d %B %Y');
+        // dd($this->tanggal_gaji);
     }
 
     protected static ?string $title = 'Take Home Pay';
