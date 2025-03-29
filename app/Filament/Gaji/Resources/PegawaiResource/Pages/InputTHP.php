@@ -33,8 +33,8 @@ class InputTHP extends Page
         $this->periode = Carbon::now('Asia/Jakarta')->format('m');
         setlocale(LC_ALL, 'IND');
         $tanggal = $this->periode . '/03/' . Carbon::now('Asia/Jakarta')->format('Y');
-        $this->periode_gaji = Carbon::parse($tanggal)->subMonth()->formatLocalized('%B %Y');
-        $this->tanggal_gaji = Carbon::parse($tanggal)->subMonth()->formatLocalized('%A %d %B %Y');
+        $this->periode_gaji = Carbon::parse($tanggal)->formatLocalized('%B %Y');
+        $this->tanggal_gaji = Carbon::parse($tanggal)->addMonth()->formatLocalized('%A %d %B %Y');
         $this->record = $this->resolveRecord($record);
         $this->penerimaan = Penghasilan::where('nomor_induk_pegawai', $this->record->nip)->whereMonth('created_at', $this->periode)->get();
         $this->potongan = Potongan::where('nomor_induk_pegawai', $this->record->nip)->whereMonth('created_at', $this->periode)->get();
