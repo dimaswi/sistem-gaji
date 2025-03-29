@@ -149,7 +149,7 @@ class PegawaiResource extends Resource
                 ExportAction::make()
                     ->exporter(PegawaiExporter::class)
                 // ->exporter(PegawaiExporter::class)
-            ]);;
+            ]);
     }
 
     public static function getRelations(): array
